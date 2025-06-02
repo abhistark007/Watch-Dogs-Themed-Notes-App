@@ -7,7 +7,12 @@ import { desc, eq } from "drizzle-orm";
 
 export default async function Home() {
   const user = await getUser();
-  const _notes = await db.select().from(notes).where(eq(notes.userId,user.id)).orderBy(desc(notes.updatedAt))
+ 
+  const _notes = await db
+    .select()
+    .from(notes)
+    .where(eq(notes.userId, user.id))
+    .orderBy(desc(notes.updatedAt));
 
 
  
