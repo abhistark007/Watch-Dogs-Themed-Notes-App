@@ -14,7 +14,7 @@ export const addNewNoteAction = async (formData: FormData)=>{
 
         const text = formData.get("text") as string;
 
-        await db.insert(notes).values({text,userId: user.id})
+        await db.insert(notes).values({text,userId: user.id,createdAt:new Date(),updatedAt:new Date()})
 
         revalidatePath("/")
     
@@ -49,7 +49,9 @@ export const editNoteAction = async (formData:FormData)=>{
         const text = formData.get("text") as string;
         const noteId = formData.get("noteId") as string;
 
-        await db.update(notes).set({text,updatedAt:new Date()}).where(and(eq(notes.id,Number(noteId)),eq(notes.userId,user.id)))
+        await db.update(notes)
+        .set({text,updatedAt:new Date()})
+        .where(and(eq(notes.id,Number(noteId)),eq(notes.userId,user.id)))
 
         revalidatePath("/")
     
